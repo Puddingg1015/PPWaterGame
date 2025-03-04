@@ -1,4 +1,4 @@
-## Welcome to the Offical Pedro Pathing Quickstart!  
+## Team 16932's new repo for the 2025 ~~WaterGame~~ Into the Deep FTC season!
 
-Follow the steps on our [website](https://pedropathing.com/) to tune and setup!  
-Feel Free to reach out on the [Offical Pedro Pathing Discord Server](https://discord.gg/2GfC4qBP5s)!
+PP's [website](https://pedropathing.com/) for to tune and setup!  
+PP's [Offical Pedro Pathing Discord Server](https://discord.gg/2GfC4qBP5s)!
