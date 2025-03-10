@@ -21,7 +21,9 @@ public class ExArm extends PulleyArm {
     public ExArm() {
         super();
         this.controller = new PIDController(p, i, d);
-        target = this.getRoughArmPosition();
+        try {
+            target = this.getRoughArmPosition();
+        } catch (NullPointerException ignored) {}
     }
 
     @Override
@@ -31,6 +33,7 @@ public class ExArm extends PulleyArm {
             this.auxillary = (DcMotorEx) actuators[3];
             this.auxillary.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         } catch (Exception ignored) {}
+        target = this.getRoughArmPosition();
     }
 
     @Override
