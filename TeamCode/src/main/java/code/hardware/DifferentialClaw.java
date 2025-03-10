@@ -52,7 +52,7 @@ public class DifferentialClaw extends Claw {
 
 
     public void close() {
-        this.actuator.setPosition(0.69);
+        this.actuator.setPosition(0.8);
         this.status = CStatus.CLOSED;
     }
 

@@ -45,7 +45,7 @@ public class ExArm extends PulleyArm {
 //                double ff = Math.cos(Math.toRadians(target/TICKS_IN_DEG))*f;
 //                power =  ff;
 //                power = -0.1;
-                power = -0.005;
+                power = -0.001;
             } else { // just have regular power being power;
                 // whenever we apply power, ZPB is off
                 // kinda scuffed but it hopefully works

@@ -19,7 +19,7 @@ public class Claw {
     }
 
     public void close() {
-        this.actuator.setPosition(0.69);
+        this.actuator.setPosition(0.92);
         this.status = CStatus.CLOSED;
     }
 

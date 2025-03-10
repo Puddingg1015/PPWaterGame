@@ -24,6 +24,7 @@ public class PulleyArm extends Arm {
     public void setActuators(Object... actuators) {
         super.setActuators(actuators[0]);
         this.spool = (DcMotorEx) actuators[1];
+        this.spool.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 //        this.toucher = (TouchSensor) actuators[2];
         this.magtoucher = (DigitalChannel) actuators[2];
         this.magtoucher.setMode(DigitalChannel.Mode.INPUT);

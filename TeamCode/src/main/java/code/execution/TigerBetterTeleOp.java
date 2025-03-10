@@ -25,7 +25,7 @@ import code.hardware.ZauxArm;
 import code.vision.GameObjectCVProcessor;
 
 @TeleOp(name = "Tiger Better TeleOp v5.1")
-public class TigeBetterTeleOp extends LinearOpMode {
+public class TigerBetterTeleOp extends LinearOpMode {
 
     enum SpeedMode {
         TURBO, STANDARD, PRECISION
@@ -57,7 +57,7 @@ public class TigeBetterTeleOp extends LinearOpMode {
     @Deprecated
     final double ARM_AMB_POWER = 0.0;
     final double CLAW_TRIGGER_INV_SENS = 0.3;
-    final double CLAW_DELTA = 0.02;
+    final double CLAW_DELTA = 0.04;
     // 90 : 0.60167
     //  0 : 0.24167
     // 180: 1.00000
@@ -74,7 +74,7 @@ public class TigeBetterTeleOp extends LinearOpMode {
      */
     final double CLAW_0 = 0.6017;
     final double CLAW_90 = 1;
-    final double RIGHTCLAW_POSTFIX = -0.3983;
+    final double RIGHTCLAW_POSTFIX = 0;
 //    final double CLAW_180 = 1.00000;
 
     /* GLOBAL VARIABLES */
@@ -179,9 +179,9 @@ public class TigeBetterTeleOp extends LinearOpMode {
                 }
                 this.clawActions();
                 // negative is extend, positive is
-                if (arm.getRoughArmPosition() < -900) {
+                if (arm.getRoughArmPosition() < -900000000) {
 //                    arm.powerSpool(0.5); // retracts
-                } else if (arm.getRoughArmPosition() < -1000) {
+                } else if (arm.getRoughArmPosition() < -100000) {
                     arm.setPower(MotorType.PRIMARY,0.3);
                 } else {
                     arm.powerSpool(joelmode * (-gamepad2.right_trigger + gamepad2.left_trigger));
