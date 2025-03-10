@@ -21,6 +21,7 @@ public class ExArm extends PulleyArm {
     public ExArm() {
         super();
         this.controller = new PIDController(p, i, d);
+        target = this.getRoughArmPosition();
     }
 
     @Override
@@ -40,12 +41,12 @@ public class ExArm extends PulleyArm {
 //            controller.setPID(p, i, d);
             // engage zero power behaviour
             if (power == 0) {
-//                int arm_pos = this.actuator.getCurrentPosition();
-//                double pid = controller.calculate(arm_pos, target);
-//                double ff = Math.cos(Math.toRadians(target/TICKS_IN_DEG))*f;
-//                power =  ff;
+                int arm_pos = this.actuator.getCurrentPosition();
+                double pid = controller.calculate(arm_pos, target);
+                double ff = Math.cos(Math.toRadians(target/TICKS_IN_DEG))*f;
+                power =  ff;
 //                power = -0.1;
-                power = -0.001;
+//                power = -0.001;
             } else { // just have regular power being power;
                 // whenever we apply power, ZPB is off
                 // kinda scuffed but it hopefully works
