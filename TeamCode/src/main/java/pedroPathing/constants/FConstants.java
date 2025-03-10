@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class FConstants {
     static {
-        FollowerConstants.localizers = Localizers.DRIVE_ENCODERS;
+        FollowerConstants.localizers = Localizers.OTOS;
 
         FollowerConstants.leftFrontMotorName = "FrontLeft";
         FollowerConstants.leftRearMotorName = "BackLeft";
@@ -51,7 +51,7 @@ public class FConstants {
         FollowerConstants.pathEndHeadingConstraint = 0.007;
 
         FollowerConstants.useVoltageCompensationInAuto = true;
-        FollowerConstants.useVoltageCompensationInTeleOp = true;
+        FollowerConstants.useVoltageCompensationInTeleOp = false;
         FollowerConstants.nominalVoltage = 12;
     }
 }
