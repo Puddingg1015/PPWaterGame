@@ -25,7 +25,6 @@ public class JavaServoTest extends LinearOpMode {
         double dtheta;
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        LeftClaw = hardwareMap.get(Servo.class, "LeftClaw");
         TestServo = hardwareMap.get(Servo.class, "TestServo");
 
         // Put initialization blocks here.
