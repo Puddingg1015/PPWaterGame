@@ -129,7 +129,7 @@ public class DifferentialOrientationTest extends LinearOpMode {
                     if (gamepad2.right_stick_button) {
                         claw_multi = 2.0;
                     }
-                    claw.rotateWrist(-gamepad2.right_stick_x*CLAW_DELTA*claw_multi);
+                    claw.rotateSwivel(-gamepad2.right_stick_x*CLAW_DELTA*claw_multi);
                     claw.rotatePos(-gamepad2.right_stick_y*CLAW_DELTA*claw_multi);
 
                 }

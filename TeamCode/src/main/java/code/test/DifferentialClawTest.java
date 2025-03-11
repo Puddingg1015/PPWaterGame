@@ -23,9 +23,9 @@ public class DifferentialClawTest extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             if (gamepad1.x) {
-                claw.rotateWrist(0.02);
+                claw.rotateSwivel(0.02);
             } if (gamepad1.y) {
-                claw.rotateWrist(-0.02);
+                claw.rotateSwivel(-0.02);
             }
             if (gamepad1.left_bumper) {
                 claw.rotatePos(0.02);

@@ -4,12 +4,12 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import code.control.identifiers.CStatus;
 import code.hardware.hardwarebase.Claw;
+import code.hardware.hardwarebase.ThreeAxisClaw;
 
-public class DifferentialClaw extends Claw {
+public class DifferentialClaw extends ThreeAxisClaw {
 
     Servo left;
     Servo right;
-    protected CStatus status;
     public DifferentialClaw() {}
 
     public DifferentialClaw(Servo actuator, Servo left, Servo right) {
@@ -27,7 +27,7 @@ public class DifferentialClaw extends Claw {
     }
 
     // Rotates the joint itself
-    public void rotateWrist(double pos) {
+    public void rotateSwivel(double pos) {
         left.setPosition(left.getPosition()+pos);
         right.setPosition(right.getPosition()+pos);
     }
@@ -50,17 +50,6 @@ public class DifferentialClaw extends Claw {
         right.setPosition(vr);
     }
 
-
-    public void close() {
-        this.actuator.setPosition(0.8);
-        this.status = CStatus.CLOSED;
-    }
-
-    public void open() {
-        this.actuator.setPosition(0.31);
-        this.status = CStatus.OPEN;
-    }
-
     public void setUp() {
         this.left.setPosition(0);
         this.right.setPosition(1);
@@ -74,9 +63,5 @@ public class DifferentialClaw extends Claw {
     public void setDown() {
         this.left.setPosition(1);
         this.right.setPosition(0.6);
-    }
-
-    public CStatus getStatus() {
-        return this.status;
     }
 }
