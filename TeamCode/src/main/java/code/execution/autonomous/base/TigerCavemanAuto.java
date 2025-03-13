@@ -19,7 +19,7 @@ import code.hardware.LinkageArm;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
-@Autonomous(name = "!!Tiger Caveman Auto -- OLD")
+@Autonomous(name = "!!Tiger Caveman Auto -- OLD", group = "AUTOBASE")
 @Deprecated
 public class TigerCavemanAuto extends LinearOpMode {
 

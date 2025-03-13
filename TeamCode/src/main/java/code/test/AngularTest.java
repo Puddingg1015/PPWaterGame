@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import code.execution.autonomous.base.TigerCavemanAutoBase;
 
-@Autonomous(name = "AngularTest")
+@Autonomous(name = "AngularTest", group = "TEST")
 public class AngularTest extends TigerCavemanAutoBase {
 
     @Override

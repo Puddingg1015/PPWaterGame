@@ -28,7 +28,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 @Deprecated
-@TeleOp(name = "Tiger Tele Op v4.1")
+@TeleOp(name = "Tiger Tele Op v4.1", group = "TELEOP")
 public class TigerTeleOp extends LinearOpMode {
 
     enum SpeedMode {

@@ -18,7 +18,7 @@ import code.hardware.LinkageArm;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
-@Autonomous(name = "Tiger Auto Methods test")
+@Autonomous(name = "Tiger Auto Methods test", group = "TEST")
 public class TigerAutoMethodTest extends LinearOpMode {
 
     enum SpeedMode {

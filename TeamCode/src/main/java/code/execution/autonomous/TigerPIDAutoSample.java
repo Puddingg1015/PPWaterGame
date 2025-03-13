@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import code.control.identifiers.OpModeEndBehaviour;
 import code.execution.autonomous.base.TigerPIDAutoBase;
 
-@Autonomous(name = "Tiger PID Auto -- SAMPLE VER")
+@Autonomous(name = "Tiger PID Auto -- SAMPLE VER", group = "AUTO")
 public class TigerPIDAutoSample extends TigerPIDAutoBase {
 
     @Override

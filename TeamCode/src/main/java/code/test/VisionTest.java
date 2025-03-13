@@ -16,7 +16,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 //import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
 
-@TeleOp(name = "VisionTest")
+@TeleOp(name = "Vision Test", group = "TEST")
 public class VisionTest extends LinearOpMode {
 
     enum SpeedMode {

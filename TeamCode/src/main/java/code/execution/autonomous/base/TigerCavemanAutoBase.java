@@ -23,7 +23,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 
-@Autonomous(name = "!!AUTOBASE")
+@Autonomous(name = "!!AUTOBASE", group = "AUTOBASE")
 public class TigerCavemanAutoBase extends LinearOpMode {
 
     Drivetrain drivetrain;

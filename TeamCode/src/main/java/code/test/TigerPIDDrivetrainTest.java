@@ -21,7 +21,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 
 @Config
-@Autonomous(name = "PID Drivetrain Demo")
+@Autonomous(name = "PID Drivetrain Demo", group = "TEST")
 public class TigerPIDDrivetrainTest extends LinearOpMode {
 
     Drivetrain drivetrain;

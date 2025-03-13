@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import code.control.identifiers.OpModeEndBehaviour;
 import code.execution.autonomous.base.TigerCavemanAutoBase;
 
-@Autonomous(name = "!!Tiger Caveman Auto -- INNER VER -- DONT USE")
+@Autonomous(name = "!!Tiger Caveman Auto -- INNER VER -- DONT USE", group = "AUTO")
 @Deprecated
 public class TigerCavemanAutoInner extends TigerCavemanAutoBase {
 

@@ -11,6 +11,9 @@ import code.hardware.DifferentialClaw;
 @TeleOp(name = "differential claw test", group = "TEST")
 public class DifferentialClawTest extends LinearOpMode {
     protected DifferentialClaw claw;
+    double CLAW_DELTA = 0.02;
+    final double CLAW_0 = 0.6017;
+    final double CLAW_90 = 1;
 
     @Override
     public void runOpMode() {
@@ -22,18 +25,46 @@ public class DifferentialClawTest extends LinearOpMode {
         );
         waitForStart();
         while (opModeIsActive()) {
-            if (gamepad1.x) {
+            if (gamepad2.a) {
+                claw.open();
+            } if (gamepad2.b) {
+                claw.close();
+            }
+
+            if (gamepad2.x) {
                 claw.rotateSwivel(0.02);
-            } if (gamepad1.y) {
+            } if (gamepad2.y) {
                 claw.rotateSwivel(-0.02);
             }
-            if (gamepad1.left_bumper) {
+            if (gamepad2.left_bumper) {
                 claw.rotatePos(0.02);
-            } if (gamepad1.right_bumper) {
+            } if (gamepad2.right_bumper) {
                 claw.rotatePos(-0.02);
             }
+
+            if (gamepad1.left_bumper) {
+                claw.setRotation(CLAW_0);
+            }
+            if (gamepad1.right_bumper) {
+                claw.setRotation(CLAW_90);
+            }
+            if (gamepad1.x) {
+                claw.setRotation(gamepad1.left_trigger, gamepad1.right_trigger);
+            }
+            if (gamepad1.y) {
+                claw.setRotation(0.5, 0.5);
+            }
+
+            double claw_multi = 1.0;
+            if (gamepad1.right_stick_button) {
+                claw_multi = 2.0;
+            }
+
+            claw.rotateSwivel(-gamepad1.right_stick_x*CLAW_DELTA*claw_multi);
+            claw.rotatePos(gamepad1.right_stick_y*CLAW_DELTA*claw_multi);
             telemetry.addData("Left", claw.getLeftPosition());
             telemetry.addData("Right", claw.getRightPosition());
+            telemetry.addData("Status", claw.getStatus());
             telemetry.update();
         }
     }

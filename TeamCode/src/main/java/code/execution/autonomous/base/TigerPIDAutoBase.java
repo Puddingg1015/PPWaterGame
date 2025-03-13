@@ -25,7 +25,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 
-@Autonomous(name = "!!PID AUTOBASE")
+@Autonomous(name = "!!PID AUTOBASE", group = "AUTOBASE")
 public class TigerPIDAutoBase extends LinearOpMode {
 
     protected Drivetrain drivetrain;

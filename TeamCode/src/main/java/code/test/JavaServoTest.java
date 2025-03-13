@@ -6,10 +6,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "ServoTest J")
+@TeleOp(name = "ServoTest J", group = "TEST")
 public class JavaServoTest extends LinearOpMode {
 
-    private Servo LeftClaw;
     private Servo TestServo;
 
     /**
@@ -34,7 +33,6 @@ public class JavaServoTest extends LinearOpMode {
         if (opModeIsActive()) {
             // Put run blocks here.
             while (opModeIsActive()) {
-                LeftClaw.setPosition(0);
                 if (gamepad1.left_bumper && gamepad1.right_bumper) {
                     position = 0.5;
                 } else if (gamepad1.left_bumper) {

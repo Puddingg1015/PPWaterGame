@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import code.execution.autonomous.base.TigerCavemanAutoBase;
 import code.control.identifiers.OpModeEndBehaviour;
 
-@Autonomous(name = "Tiger Encoder Test")
+@Autonomous(name = "Tiger Encoder Test", group = "TEST")
 public class EncoderTest extends TigerCavemanAutoBase {
 
     @Override

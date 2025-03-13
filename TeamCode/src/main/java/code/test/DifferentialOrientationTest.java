@@ -19,7 +19,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 
 @Config
-@TeleOp(name = "Diffy Funnies")
+@TeleOp(name = "Diffy Funnies", group = "TEST")
 public class DifferentialOrientationTest extends LinearOpMode {
 
     private DcMotor Right_Front;

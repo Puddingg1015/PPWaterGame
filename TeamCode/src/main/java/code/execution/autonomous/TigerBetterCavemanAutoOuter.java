@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import code.control.identifiers.OpModeEndBehaviour;
 import code.execution.autonomous.base.TigerBetterCavemanAutoBase;
 
-@Autonomous(name = "Tiger BetterCaveman Auto -- CORNER VER")
+@Autonomous(name = "Tiger BetterCaveman Auto -- CORNER VER", group = "AUTO")
 public class TigerBetterCavemanAutoOuter extends TigerBetterCavemanAutoBase {
 
     @Override

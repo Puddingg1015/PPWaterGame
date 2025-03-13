@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  * Demonstration of the dashboard's field overlay display capabilities.
  */
 @Config
-@Autonomous
+@Autonomous(group = "TEST")
 public class OrbitTest extends LinearOpMode {
     public static double ORBITAL_FREQUENCY = 0.05;
     public static double SPIN_FREQUENCY = 0.25;

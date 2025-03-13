@@ -2,7 +2,10 @@
 package code.execution;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.pedropathing.follower.Follower;
+import com.pedropathing.localization.Pose;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -17,6 +20,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import code.control.identifiers.MotorType;
+import code.control.identifiers.SpeedMode;
 import code.control.identifiers.ZeroPowerBehaviourInputMode;
 import code.hardware.DifferentialClaw;
 import code.hardware.ExArm;
@@ -24,16 +28,9 @@ import code.hardware.ZDClaw;
 import code.hardware.ZauxArm;
 import code.vision.GameObjectCVProcessor;
 
-@TeleOp(name = "Tiger Better TeleOp v5.1")
+@Config
+@TeleOp(name = "Tiger Better TeleOp v5.1", group = "TELEOP")
 public class TigerBetterTeleOp extends LinearOpMode {
-
-    enum SpeedMode {
-        TURBO, STANDARD, PRECISION
-    }
-
-    enum AprilTag {
-        NULL, BLU_LEFT, BLU_CENTER, BLU_RIGHT, RED_LEFT, RED_CENTER, RED_RIGHT
-    }
 
     protected DcMotor Right_Front;
     protected DcMotor Right_Back;
@@ -47,6 +44,8 @@ public class TigerBetterTeleOp extends LinearOpMode {
     protected Limelight3A limelight;
     protected GameObjectCVProcessor cvProcessor;
     ElapsedTime action_cooldown;
+    protected Follower follower;
+    protected final Pose startPose = new Pose(0,0,0);
     protected double joelmode = 1.0;
 
     /* CONSTS */
@@ -288,7 +287,7 @@ public class TigerBetterTeleOp extends LinearOpMode {
                 claw_multi = 2.0;
             }
             claw.rotateSwivel(-gamepad2.right_stick_x*CLAW_DELTA*claw_multi);
-            claw.rotatePos(-gamepad2.right_stick_y*CLAW_DELTA*claw_multi);
+            claw.rotatePos(gamepad2.right_stick_y*CLAW_DELTA*claw_multi);
 
         }
 
