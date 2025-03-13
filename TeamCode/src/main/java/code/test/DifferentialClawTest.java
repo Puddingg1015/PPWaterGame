@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import code.hardware.DifferentialClaw;
 
-@TeleOp(name = "differential claw test", group = "TEST")
+@TeleOp(name = "Differential Claw Test", group = "TEST")
 public class DifferentialClawTest extends LinearOpMode {
     protected DifferentialClaw claw;
     double CLAW_DELTA = 0.02;
