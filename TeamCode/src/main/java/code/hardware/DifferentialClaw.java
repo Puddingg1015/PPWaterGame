@@ -75,4 +75,9 @@ public class DifferentialClaw extends ThreeAxisClaw {
     public void setDown() {
         this.setDown(OrthoType.HORIZONTAL);
     }
+    
+    public void setBucket() {
+        this.left.setPosition(0.3);
+        this.left.setPosition(1);
+    }
 }
