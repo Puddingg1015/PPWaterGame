@@ -44,7 +44,7 @@ public class TigerPIDAutoOuter extends TigerPIDAutoBase {
 
     private void moveAndPlaceSecondSpecimen() throws Exception {
 //        this.claw.setWristPos(1);
-        claw.setUp();
+//        claw.setUp();
         this.claw.open();
         this.arm.changePosition(900, 0.8); // 0.5
 //        this.arm.setExtension(200, 1); // 0.8
@@ -53,7 +53,7 @@ public class TigerPIDAutoOuter extends TigerPIDAutoBase {
         this.rest(1000);
         this.arm.changePosition(-500, 0.7); // 0.5
 //        this.claw.setWristPos(0.5);
-        claw.setHorizontal();
+//        claw.setHorizontal();
         this.drivetrainHandler.movePIDDisplacementVector(-1700, -300, 1); // 0.8
         this.drivetrainHandler.Backward(250, 0.6); // 0.6
         this.drivetrainHandler.Forward(200, 0.3); // 0.3

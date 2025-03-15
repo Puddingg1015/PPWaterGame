@@ -20,6 +20,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import code.control.identifiers.MotorType;
+import code.control.identifiers.OrthoType;
 import code.control.identifiers.SpeedMode;
 import code.control.identifiers.ZeroPowerBehaviourInputMode;
 import code.hardware.DifferentialClaw;
@@ -36,6 +37,7 @@ public class TigerBetterTeleOp extends LinearOpMode {
     protected DcMotor Right_Back;
     protected DcMotor Left_Front;
     protected DcMotor Left_Back;
+    protected Servo sweeper;
     protected DifferentialClaw claw;
     protected ZDClaw zclaw;
     protected ExArm arm;
@@ -49,7 +51,7 @@ public class TigerBetterTeleOp extends LinearOpMode {
     protected double joelmode = 1.0;
 
     /* CONSTS */
-    final double JOEL_MULTI = 0.3;
+    final double JOEL_MULTI = 0.4;
     final double TURBO_MULTI = 1.5;
     final double PRECISION_MULTI = 0.320;
     final double STD_SPEED = 0.69;
@@ -117,6 +119,7 @@ public class TigerBetterTeleOp extends LinearOpMode {
                 hardwareMap.get(Servo.class, "LeftClaw"),
                 hardwareMap.get(Servo.class, "RightClaw")
         );
+        this.sweeper = hardwareMap.get(Servo.class, "Sweeper");
         //        claw = new DoubleClaw(
 //                hardwareMap.get(Servo.class, "LeftClaw"),
 //                hardwareMap.get(Servo.class, "RightClaw")
@@ -140,6 +143,7 @@ public class TigerBetterTeleOp extends LinearOpMode {
         this.initIMU();
         this.initVisionProcessor();
         this.cvProcessor.safeStart();
+        this.contractSweeper();
         this.extendedSetup();
         waitForStart();
         action_cooldown = new ElapsedTime();
@@ -158,7 +162,6 @@ public class TigerBetterTeleOp extends LinearOpMode {
                     }
                     arm_power = joelmode * arm_multi * gamepad2.left_stick_y;
                 }
-//                 soft stop
                 if (gamepad1.left_bumper) {
                     speed_mode = SpeedMode.PRECISION;
                 } else if (gamepad1.right_bumper) {
@@ -170,6 +173,12 @@ public class TigerBetterTeleOp extends LinearOpMode {
                 if (gamepad1.y) {
                     initIMU();
                 }
+                if (gamepad1.right_trigger > 0.69) {
+                    this.extendSweeper();
+                }
+                if (gamepad1.left_trigger > 0.69) {
+                    this.contractSweeper();
+                }
                 if (gamepad2.x) {
                     joelmode = JOEL_MULTI;
                     // toggleJoelMode();
@@ -178,23 +187,21 @@ public class TigerBetterTeleOp extends LinearOpMode {
                 }
                 this.clawActions();
                 // negative is extend, positive is
-                if (arm.getRoughArmPosition() < -900000000) {
-//                    arm.powerSpool(0.5); // retracts
-                } else if (arm.getRoughArmPosition() < -100000) {
-                    arm.setPower(MotorType.PRIMARY,0.3);
+                if (arm.getRoughArmPosition() < -900 && !(gamepad2.y && gamepad2.x)) {
+                    arm.setPower(MotorType.PRIMARY,0.1);
                 } else {
                     arm.powerSpool(joelmode * (-gamepad2.right_trigger + gamepad2.left_trigger));
                     arm.setPower(MotorType.PRIMARY, (float) arm_power);
                 }
 
                 //                zarm.setPower(MotorType.SECONDARY, gamepad2.right_stick_y);
-                if (gamepad2.y) {
-                    if (arm.zero_power_behaviour_mode == ZeroPowerBehaviourInputMode.VELOCITYINPUT) {
-                        arm.zero_power_behaviour_mode = ZeroPowerBehaviourInputMode.POSITIONINPUT;
-                    } else {
-                        arm.zero_power_behaviour_mode = ZeroPowerBehaviourInputMode.VELOCITYINPUT;
-                    }
-                }
+//                if (gamepad2.y) {
+//                    if (arm.zero_power_behaviour_mode == ZeroPowerBehaviourInputMode.VELOCITYINPUT) {
+//                        arm.zero_power_behaviour_mode = ZeroPowerBehaviourInputMode.POSITIONINPUT;
+//                    } else {
+//                        arm.zero_power_behaviour_mode = ZeroPowerBehaviourInputMode.VELOCITYINPUT;
+//                    }
+//                }
                 if (gamepad2.dpad_up) {
                     arm.setPower(MotorType.PRIMARY, -0.1); // 0.41
                 }
@@ -242,6 +249,14 @@ public class TigerBetterTeleOp extends LinearOpMode {
         }
     }
 
+    protected void extendSweeper() {
+        this.sweeper.setPosition(0.5);
+    }
+
+    protected void contractSweeper() {
+        this.sweeper.setPosition(1);
+    }
+
     private void initVisionProcessor() {
         this.cvProcessor = new GameObjectCVProcessor(hardwareMap, "ArmCam");
     }
@@ -257,6 +272,15 @@ public class TigerBetterTeleOp extends LinearOpMode {
         if (gamepad2.right_bumper) {
             this.claw.close();
         }
+        if (gamepad2.dpad_left) {
+            this.claw.setDown(OrthoType.HORIZONTAL);
+        }
+        if (gamepad2.dpad_right) {
+            this.claw.setDown(OrthoType.VERTICAL);
+        }
+        if (gamepad2.x) {
+            this.claw.setStraight();
+        }
         double orientation_updated_position = CLAW_0 +
                 (CLAW_90-CLAW_0)*(
                         gamepad2.b ?
@@ -264,32 +288,32 @@ public class TigerBetterTeleOp extends LinearOpMode {
                         :
                         Math.abs(this.cvProcessor.pipeline.getOrientation())
                 )/90;
-        if (!hold_claw) {
+        if (gamepad1.a) {
             telemetry.addData("Streaming", this.cvProcessor.isStreaming());
             telemetry.addData("Press A", "Stop Streaming");
             if (gamepad2.a && action_cooldown.milliseconds() > 500) {
 //                this.cvProcessor.stop();
-                hold_claw = true;
+//                hold_claw = true;
                 action_cooldown.reset();
             }
-            this.claw.setRotation(orientation_updated_position, orientation_updated_position + RIGHTCLAW_POSTFIX);
+//            this.claw.setRotation(orientation_updated_position, orientation_updated_position + RIGHTCLAW_POSTFIX);
         } else {
             telemetry.addData("Streaming", "OFF");
             telemetry.addData("Press A", "Start Streaming");
             telemetry.addData("Holding Position", "Manual Control Enabled");
             if (gamepad2.a && action_cooldown.milliseconds() > 500) {
 //                this.cvProcessor.safeStart();
-                hold_claw = false;
+//                hold_claw = false;
                 action_cooldown.reset();
             }
-            double claw_multi = 1.0;
-            if (gamepad2.right_stick_button) {
-                claw_multi = 2.0;
-            }
-            claw.rotateSwivel(-gamepad2.right_stick_x*CLAW_DELTA*claw_multi);
-            claw.rotatePos(gamepad2.right_stick_y*CLAW_DELTA*claw_multi);
-
         }
+
+        double claw_multi = 1.0;
+        if (gamepad2.right_stick_button) {
+            claw_multi = 2.0;
+        }
+        claw.rotateSwivel(-gamepad2.right_stick_x*CLAW_DELTA*claw_multi);
+        claw.rotatePos(-gamepad2.right_stick_y*CLAW_DELTA*claw_multi);
 
     }
 

@@ -43,7 +43,7 @@ public class TigerBetterCavemanAutoOuter extends TigerBetterCavemanAutoBase {
 
 
     private void moveAndPlaceSecondSpecimen() throws Exception {
-        this.claw.setWristPos(1);
+//        this.claw.setWristPos(1);
         this.claw.open();
         this.arm.changePosition(900, 0.8); // 0.5
         this.arm.setExtension(200, 1); // 0.8
@@ -51,7 +51,7 @@ public class TigerBetterCavemanAutoOuter extends TigerBetterCavemanAutoBase {
         this.claw.close();
         this.rest(1000);
         this.arm.changePosition(-500, 0.7); // 0.5
-        this.claw.setWristPos(0.5);
+//        this.claw.setWristPos(0.5);
         this.drivetrainHandler.FCOptimizedMoveDisplacementVector(-1700, 300, 1); // 0.8
         this.drivetrainHandler.Backward(250, 0.6); // 0.6
         this.drivetrainHandler.Forward(200, 0.3); // 0.3

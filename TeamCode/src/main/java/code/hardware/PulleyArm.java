@@ -62,11 +62,11 @@ public class PulleyArm extends Arm {
         this.spool.setPower(abs_power);
         this.spool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         while(this.spool.isBusy()) {
-    //            if ((spool.getCurrent(CurrentUnit.AMPS) > 5 && delta_pos > 0) || (this.toucher.isPressed() && delta_pos < 0)) {
-    //                spool.setPower(0);
-    //                this.spool.setTargetPosition(spool.getCurrentPosition());
-    //                throw new Exception("Erm what the sigma");
-    //            }
+                if ((spool.getCurrent(CurrentUnit.AMPS) > 5 && delta_pos > 0) || (this.toucher.isPressed() && delta_pos < 0)) {
+                    spool.setPower(0);
+                    this.spool.setTargetPosition(spool.getCurrentPosition());
+                    throw new Exception("Erm what the sigma");
+                }
         }
         this.spool.setPower(0);
     }

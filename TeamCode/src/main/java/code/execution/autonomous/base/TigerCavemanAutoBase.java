@@ -80,6 +80,7 @@ public class TigerCavemanAutoBase extends LinearOpMode {
 //                hardwareMap.get(Servo.class, "LeftClaw"),
 //                hardwareMap.get(Servo.class, "RightClaw")
 //        );
+
         claw = new N2DClaw(hardwareMap.get(Servo.class, "MainClaw"), hardwareMap.get(Servo.class, "Wrist"));
 
         this.imu = hardwareMap.get(IMU.class, "imu");

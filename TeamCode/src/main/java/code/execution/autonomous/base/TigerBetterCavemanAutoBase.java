@@ -16,6 +16,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import code.control.identifiers.OpModeEndBehaviour;
+import code.hardware.DifferentialClaw;
+import code.hardware.ExArm;
 import code.hardware.hardwarebase.Drivetrain;
 import code.hardware.DrivetrainHandler;
 import code.hardware.N2DClaw;
@@ -29,8 +31,8 @@ public class TigerBetterCavemanAutoBase extends LinearOpMode {
 
     protected Drivetrain drivetrain;
     protected DrivetrainHandler drivetrainHandler;
-    protected N2DClaw claw;
-    protected PulleyArm arm;
+    protected DifferentialClaw claw;
+    protected ExArm arm;
     protected IMU imu;
     protected AprilTagProcessor myAprilTagProcessor;
     protected VisionPortal myVisionPortal;
@@ -70,11 +72,18 @@ public class TigerBetterCavemanAutoBase extends LinearOpMode {
 //                hardwareMap.get(Servo.class, "Linkage")
 //        );
 //        claw = new Claw(hardwareMap.get(Servo.class, "LeftClaw"));
-        arm = new PulleyArm();
+//        arm = new PulleyArm();
+//        arm.setActuators(
+//                hardwareMap.get(DcMotor.class, "Arm"),
+//                hardwareMap.get(DcMotorEx.class, "Spool"),
+//                hardwareMap.get(DigitalChannel.class, "MagneticSensor")
+//        );
+        arm = new ExArm();
         arm.setActuators(
                 hardwareMap.get(DcMotor.class, "Arm"),
                 hardwareMap.get(DcMotorEx.class, "Spool"),
-                hardwareMap.get(DigitalChannel.class, "MagneticSensor")
+                hardwareMap.get(DigitalChannel.class, "MagneticSensor"),
+                hardwareMap.get(DcMotor.class, "ZAux")
         );
         this.arm.actuator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.arm.actuator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -82,8 +91,12 @@ public class TigerBetterCavemanAutoBase extends LinearOpMode {
 //                hardwareMap.get(Servo.class, "LeftClaw"),
 //                hardwareMap.get(Servo.class, "RightClaw")
 //        );
-        claw = new N2DClaw(hardwareMap.get(Servo.class, "MainClaw"), hardwareMap.get(Servo.class, "Wrist"));
-
+//        claw = new N2DClaw(hardwareMap.get(Servo.class, "MainClaw"), hardwareMap.get(Servo.class, "Wrist"));
+        claw = new DifferentialClaw(
+                hardwareMap.get(Servo.class, "MainClaw"),
+                hardwareMap.get(Servo.class, "LeftClaw"),
+                hardwareMap.get(Servo.class, "RightClaw")
+        );
         this.imu = hardwareMap.get(IMU.class, "imu");
         this.initIMU();
 //        this.imuHandler = new IMUHandler(imu);
@@ -109,7 +122,7 @@ public class TigerBetterCavemanAutoBase extends LinearOpMode {
 //        sleep(300);
         this.logEvent(-1);
         telemetry.update();
-        claw.setWristPos(0.5);
+//        claw.setWristPos(0.5);
         if (opModeIsActive()) {
             telemetry.update();
             try {
@@ -132,7 +145,7 @@ public class TigerBetterCavemanAutoBase extends LinearOpMode {
     protected void moveAndPlaceSpecimen() throws Exception {
         // Extend
         this.arm.setExtension(1000, 1);
-        claw.setWristPos(0.5);
+//        claw.setWristPos(0.5);
         this.drivetrainHandler.Forward(200, 0.5); // 0.5
 //        sleep(300);
         // Hook
@@ -142,7 +155,7 @@ public class TigerBetterCavemanAutoBase extends LinearOpMode {
         claw.open();
         // Drop
 //        sleep(300);
-        claw.setWristPos(0.8);
+//        claw.setWristPos(0.8);
         this.arm.setExtension(-1000, 0.9);
         sleep(0);
         this.claw.close();

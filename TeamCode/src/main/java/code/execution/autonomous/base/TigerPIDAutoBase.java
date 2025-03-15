@@ -116,7 +116,7 @@ public class TigerPIDAutoBase extends LinearOpMode {
         this.logEvent(-1);
         telemetry.update();
 //        claw.setWristPos(0.5);
-        claw.setHorizontal();
+//        claw.setHorizontal();
         if (opModeIsActive()) {
             telemetry.update();
             try {
@@ -140,7 +140,7 @@ public class TigerPIDAutoBase extends LinearOpMode {
         // Extend
         // this.arm.setExtension(1000, 1);
 //        claw.setWristPos(0.5);
-        claw.setHorizontal();
+//        claw.setHorizontal();
         this.drivetrainHandler.movePIDDisplacementVector(0, 200, 0.5); // 0.5
 //        sleep(300);
         // Hook
@@ -151,7 +151,7 @@ public class TigerPIDAutoBase extends LinearOpMode {
         // Drop
 //        sleep(300);
 //        claw.setWristPos(0.8);
-        claw.setUp();
+//        claw.setUp();
         // this.arm.setExtension(-1000, 0.9);
         sleep(0);
         this.claw.close();

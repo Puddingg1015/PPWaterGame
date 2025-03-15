@@ -3,6 +3,7 @@ package code.hardware;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import code.control.identifiers.CStatus;
+import code.control.identifiers.OrthoType;
 import code.hardware.hardwarebase.Claw;
 import code.hardware.hardwarebase.ThreeAxisClaw;
 
@@ -55,13 +56,23 @@ public class DifferentialClaw extends ThreeAxisClaw {
         this.right.setPosition(1);
     }
 
-    public void setHorizontal() {
-        this.left.setPosition(0.6);
-        this.right.setPosition(0.1);
+
+    public void setStraight() {
+        this.left.setPosition(0.655);
+        this.right.setPosition(0.9622);
+    }
+
+    public void setDown(OrthoType type) {
+        if (type == OrthoType.VERTICAL) {
+            this.left.setPosition(0.5783);
+            this.right.setPosition(0.3244);
+        } else {
+            this.left.setPosition(0.9289);
+            this.right.setPosition(0.7022);
+        }
     }
 
     public void setDown() {
-        this.left.setPosition(1);
-        this.right.setPosition(0.6);
+        this.setDown(OrthoType.HORIZONTAL);
     }
 }

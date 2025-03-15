@@ -36,14 +36,13 @@ public class ThreeAxisClaw extends Claw {
     public void setRotation(double vl, double vr) {
     }
 
-
     public void close() {
-        this.actuator.setPosition(0.85);
+        this.actuator.setPosition(0.27);
         this.status = CStatus.CLOSED;
     }
 
     public void open() {
-        this.actuator.setPosition(0.31);
+        this.actuator.setPosition(0);
         this.status = CStatus.OPEN;
     }
 
