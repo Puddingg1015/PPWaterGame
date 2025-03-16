@@ -32,7 +32,7 @@ public class TigerBetterCavemanAutoBase extends LinearOpMode {
     protected Drivetrain drivetrain;
     protected DrivetrainHandler drivetrainHandler;
     protected DifferentialClaw claw;
-    protected ExArm arm;
+    protected PulleyArm arm;
     protected IMU imu;
     protected AprilTagProcessor myAprilTagProcessor;
     protected VisionPortal myVisionPortal;
@@ -72,19 +72,19 @@ public class TigerBetterCavemanAutoBase extends LinearOpMode {
 //                hardwareMap.get(Servo.class, "Linkage")
 //        );
 //        claw = new Claw(hardwareMap.get(Servo.class, "LeftClaw"));
-//        arm = new PulleyArm();
-//        arm.setActuators(
-//                hardwareMap.get(DcMotor.class, "Arm"),
-//                hardwareMap.get(DcMotorEx.class, "Spool"),
-//                hardwareMap.get(DigitalChannel.class, "MagneticSensor")
-//        );
-        arm = new ExArm();
+        arm = new PulleyArm();
         arm.setActuators(
                 hardwareMap.get(DcMotor.class, "Arm"),
                 hardwareMap.get(DcMotorEx.class, "Spool"),
-                hardwareMap.get(DigitalChannel.class, "MagneticSensor"),
-                hardwareMap.get(DcMotor.class, "ZAux")
+                hardwareMap.get(DigitalChannel.class, "MagneticSensor")
         );
+//        arm = new ExArm();
+//        arm.setActuators(
+//                hardwareMap.get(DcMotor.class, "Arm"),
+//                hardwareMap.get(DcMotorEx.class, "Spool"),
+//                hardwareMap.get(DigitalChannel.class, "MagneticSensor"),
+//                hardwareMap.get(DcMotor.class, "ZAux")
+//        );
         this.arm.actuator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.arm.actuator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //        claw = new DoubleClaw(

@@ -13,7 +13,7 @@ public class ExArm extends PulleyArm {
     private PIDController controller;
     private DcMotorEx auxillary;
     public static double p = 0.006, i = 0.22, d = 0.0008;
-    public static double f = -0.002;
+    public static double f = -0.01;
     public static int target = 0;
     public final double TICKS_IN_DEG = 1300.0/180.0;
     public final int LOOP_INCR = 20;
@@ -82,7 +82,9 @@ public class ExArm extends PulleyArm {
             int arm_pos = this.actuator.getCurrentPosition();
             double pid = controller.calculate(arm_pos, target);
             double ff = Math.cos(Math.toRadians(target/TICKS_IN_DEG))*f;
-            double power = (pid + ff > 0 ? Math.min(pid + ff, abs_power) : Math.max(pid + ff, -abs_power));
+            double power;
+//            double power = (pid + ff > 0 ? Math.min(pid + ff, abs_power) : Math.max(pid + ff, abs_power));
+            power = pid+ff;
             this.actuator.setPower(power);
             this.auxillary.setPower(power);
         }

@@ -13,9 +13,18 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.pathgen.BezierCurve;
 import com.pedropathing.pathgen.PathChain;
 import com.pedropathing.pathgen.Point;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import code.control.identifiers.PathNavStatus;
 import code.control.identifiers.PathStatus;
+import code.hardware.DifferentialClaw;
+import code.hardware.DrivetrainHandler;
+import code.hardware.PulleyArm;
+import code.hardware.hardwarebase.Drivetrain;
 import pedroPathing.constants.FConstants;
 import pedroPathing.constants.LConstants;
 
@@ -34,6 +43,11 @@ import pedroPathing.constants.LConstants;
 @Autonomous (name = "Sample Auto", group = "AUTO")
 public class SampleAuto extends OpMode {
 
+    protected Drivetrain drivetrain;
+    protected DrivetrainHandler drivetrainHandler;
+    protected DifferentialClaw claw;
+    protected PulleyArm arm;
+
     public static double RADIUS = 10;
 
     private Follower follower;
@@ -48,11 +62,25 @@ public class SampleAuto extends OpMode {
      */
     @Override
     public void init() {
+        arm = new PulleyArm();
+        arm.setActuators(
+                hardwareMap.get(DcMotor.class, "Arm"),
+                hardwareMap.get(DcMotorEx.class, "Spool"),
+                hardwareMap.get(DigitalChannel.class, "MagneticSensor")
+        );
+        this.arm.actuator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.arm.actuator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        claw = new DifferentialClaw(
+                hardwareMap.get(Servo.class, "MainClaw"),
+                hardwareMap.get(Servo.class, "LeftClaw"),
+                hardwareMap.get(Servo.class, "RightClaw")
+        );
         telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
+        this.drivetrainHandler = new DrivetrainHandler(this.drivetrain, this.telemetry, this.imu);
+
         Constants.setConstants(FConstants.class, LConstants.class);
         follower = new Follower(hardwareMap);
         buildPath();
-        telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
         telemetry.update();
     }
 
@@ -68,7 +96,11 @@ public class SampleAuto extends OpMode {
     @Override
     public void loop() {
         follower.update();
-        autonomousPathUpdate();
+        try {
+            autonomousPathUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         if (follower.atParametricEnd()) {
             telemetry.addData("End", true);
         }
@@ -197,13 +229,20 @@ public class SampleAuto extends OpMode {
         this.status = status;
     }
 
-    public void autonomousPathUpdate() {
+    public void autonomousPathUpdate() throws Exception {
         if (status.equals(PathStatus.PRELOAD)) {
             follower.followPath(scorePreload);
             setPathStatus(PathStatus.Sample.SAMPLE1_PICKUP);
             if (!follower.isBusy()) {
                 /* Score Preload */
-
+                this.arm.setExtension(1000, 1);
+                this.drivetrainHandler.Forward(200, 0.5); // 0.5
+                arm.changePosition(-75, 0.5);
+                this.drivetrainHandler.Backward(200, 0.5);
+                claw.open();
+                this.arm.setExtension(-1000, 0.9);
+                this.claw.close();
+                arm.changePosition(150, 0.5);
                 /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
             }
         } else if (status.equals(PathStatus.Sample.SAMPLE1_PICKUP)) {/* You could check for
