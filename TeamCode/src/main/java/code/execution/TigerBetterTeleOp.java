@@ -87,6 +87,7 @@ public class TigerBetterTeleOp extends LinearOpMode {
     double pivot_sign = 1.0;
     boolean USE_WEBCAM = true;
     boolean hold_claw = true;
+    boolean perma_arm_down = false;
 
     /**
      * This function is executed when this OpMode is selected from the Driver
@@ -173,6 +174,13 @@ public class TigerBetterTeleOp extends LinearOpMode {
                 if (gamepad1.y) {
                     initIMU();
                 }
+
+                if (gamepad2.a && gamepad2.b) {
+                    while(opModeIsActive()) {
+                        this.arm.setPower(MotorType.PRIMARY, 1);
+                    }
+                }
+                
                 if (gamepad1.right_trigger > 0.69) {
                     this.extendSweeper();
                 }

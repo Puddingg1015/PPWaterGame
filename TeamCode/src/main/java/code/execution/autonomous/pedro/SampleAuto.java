@@ -76,7 +76,7 @@ public class SampleAuto extends OpMode {
                 hardwareMap.get(Servo.class, "RightClaw")
         );
         telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
-        this.drivetrainHandler = new DrivetrainHandler(this.drivetrain, this.telemetry, this.imu);
+        this.drivetrainHandler = new DrivetrainHandler(this.drivetrain, this.telemetry, null);
 
         Constants.setConstants(FConstants.class, LConstants.class);
         follower = new Follower(hardwareMap);

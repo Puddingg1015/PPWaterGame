@@ -17,7 +17,7 @@ public class TigerBetterCavemanAutoOuter extends TigerBetterCavemanAutoBase {
         telemetry.addData("Event", 5);
         // 1 Sample
         arm.changePosition(-250, 0.5);
-        int num_specimens = 3;
+        int num_specimens = 2;
         for (int i = 0; i < num_specimens; i++) {
             this.drivetrainHandler.Forward(1400, 0.8); // 0.8
 //            this.rest(200);
